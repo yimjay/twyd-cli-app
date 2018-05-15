@@ -31,3 +31,7 @@ Directions
 Sorry! I can't seem to find information about that city (but I'm learning). Try a different city:
 
 ### When done, type "exit"
+
+
+### TODO
+  Case sensitivity check when finding cities

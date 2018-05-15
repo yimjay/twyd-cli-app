@@ -13,9 +13,17 @@ class Twyd::CLI
     puts ""
     puts "Welcome to TWYD (Travel With Your Dog)! This app was made by someone who loves exploring new cities with her dog, Gretchen, in the hopes that you will keep exploring the world with your dog(s) too."
     puts ""
+  end
 
   def choose_city
     Twyd::CityScraper.get_cities
     puts "Now, tell me the city that you'd like to look up:"
+    city = gets.strip
+    Twyd::CityScraper.find_city(city) ? list_activities : choose_city
   end
+
+  def list_activities
+    puts "list"
+  end
+
 end

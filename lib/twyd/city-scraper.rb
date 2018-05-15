@@ -18,4 +18,10 @@ class Twyd::CityScraper
   def list_cities
     @cities
   end
+
+  def find_city(city)
+    @cities[city] != nil
+  end
+
+
 end
