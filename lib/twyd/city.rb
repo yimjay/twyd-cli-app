@@ -1,14 +1,17 @@
 class Twyd::City
   attr_accessor :name, :state, :website
 
-  @@all = []
-
-  def initialize
-    @@all << self
-  end
-
-  def self.all
-    @@all
-  end
+  # # Adds all instances of City
+  # @@all = []
+  #
+  # # Initialize
+  # def initialize
+  #   @@all << self
+  # end
+  #
+  # # Make all array readable
+  # def self.all
+  #   @@all
+  # end
 
 end

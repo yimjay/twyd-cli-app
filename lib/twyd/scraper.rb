@@ -14,14 +14,17 @@ class Twyd::Scraper
   # Scrapes list of activities per city
   def self.get_activities(path)
     html = Nokogiri::HTML(open(path))
-    html.css("div#results-list div").map do |activities|
+    html.css("div .info h2 a").map do |activities|
       @activity = Twyd::Activity.new
-      @activity.name = activities.attribute("data-name").value
-      @activity.type = activities.attribute("data-type").value
-      @activity.rating = activities.attribute("data-rating").value
+      @activity.name = activities.text
+      @activity.website = activities.attribute("href").value
       @activity
     end
   end
-  #get description of specific activity
+
+  # Scrapes description of specific activity
+  def self.describe_activities
+    puts ""
+  end
 
 end
