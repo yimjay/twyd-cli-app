@@ -1,19 +1,13 @@
 class Twyd::Scraper
+
   # Scrapes the name and individual websites for the most popular cities in BrigFido's website
-  attr_accessor :cities
-
-  def initialize
-    @cities = {}
-  end
-
-  def get_cities
+  def self.get_cities
     html = Nokogiri::HTML(open("https://www.bringfido.com/destination/popular/"))
-    html.css("div .info h2 a").each do |city|
-
-      Twyd::City.new(city.text, city.attribute("href").value)
-      # @cities[city.text] = {
-      #   :website => city.attribute("href").value
-      # }
+    html.css("div .info h2 a").map do |cities|
+      @city = Twyd::City.new
+      @city.name, @city.state = cities.text.split(", ")
+      @city.website = cities.attribute("href").value
+      @city
     end
   end
 

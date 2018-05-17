@@ -19,20 +19,18 @@ class Twyd::CLI
   end
 
   def choose_city
+    cities = Twyd::Scraper.get_cities #array of City object instances
     city = nil
 
     while city != "exit"
       puts "Now, tell me the city that you'd like to look up:"
       city = gets.strip.downcase
-      case city
-      when "1"
-        puts "More information on Deal 1"
-      when "2"
-        puts "More on 2"
+
+      cities.each do |c|
+        c.name == city
+        puts "Found!"
       end
     end
-    # Twyd::Scraper.get_cities
-    # Twyd::Scraper.find_city(city) ? list_activities : choose_city
   end
 
   def list_activities
@@ -42,5 +40,7 @@ class Twyd::CLI
   def goodbye
     puts "Have a fun way with your dog(s). Goodbye!"
   end
+
+end
 
 end

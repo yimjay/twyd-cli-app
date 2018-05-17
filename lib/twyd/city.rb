@@ -1,11 +1,9 @@
-class Tywd::City
-  attr_accessor :city, :website
+class Twyd::City
+  attr_accessor :name, :state, :website
 
   @@all = []
 
-  def initialize(city, website)
-    @city = city
-    @website = website
+  def initialize
     @@all << self
   end
 
