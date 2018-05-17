@@ -19,28 +19,39 @@ class Twyd::CLI
   end
 
   def choose_city
-    cities = Twyd::Scraper.get_cities #array of City object instances
-    city = nil
+    @cities = Twyd::Scraper.get_cities #array of City object instances
+    input = nil
 
-    while city != "exit"
-      puts "Now, tell me the city that you'd like to look up:"
-      city = gets.strip.downcase
-
-      cities.each do |c|
-        c.name == city
-        puts "Found!"
+    while input != "exit"
+      puts "Here's a list of available cities:"
+      puts ""
+      @cities.each.with_index(1) do |city, i|
+        puts "#{i}. #{city.name}"
+      end
+      puts ""
+      puts "Now, choose a city:"
+      input = gets.strip
+      case input
+      when "1"
+        @path = "https://www.bringfido.com/attraction/city/las_vegas_nv_us/"
+        list_activities
       end
     end
   end
 
+  # def make_path
+  #
+  # end
+
   def list_activities
-    puts "list"
+    @activities = Twyd::Scraper.get_activities(@path)
+    @activities.each do |a|
+      puts a
+    end
   end
 
   def goodbye
-    puts "Have a fun way with your dog(s). Goodbye!"
+    puts "Have a fun day with your dog(s). Goodbye!"
   end
-
-end
 
 end
