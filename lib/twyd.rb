@@ -1,13 +1,9 @@
-require "twyd/version"
-require "twyd/city-scraper.rb"
-# require CLI
-# require other
+# File dependencies
+require_relative "./twyd/version"
+require_relative "./twyd/cli.rb"
 
+# Other gems
 require "rubygems"
 require "nokogiri"
 require "open-uri"
 require "pry"
-
-# module Twyd
-#   CityScraper.new.get_cities
-# end

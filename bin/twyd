@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
-puts "working so far..."
+require_relative "../lib/twyd"
+
+Twyd::CLI.new.call
