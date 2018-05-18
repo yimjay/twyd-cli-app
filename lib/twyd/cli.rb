@@ -4,7 +4,8 @@ class Twyd::CLI
     welcome
     choose_city
     make_path
-    # list_activities
+    list_activities
+    continue
     goodbye
   end
 
@@ -31,9 +32,10 @@ class Twyd::CLI
       puts "#{i}. #{city.name}"
     end
     puts ""
-    puts "------------------"
+    puts "-------------------"
     puts "Now, choose a city:"
-    puts "------------------"
+    puts "-------------------"
+    puts ""
     @input = gets.strip
   end
 
@@ -41,8 +43,6 @@ class Twyd::CLI
     case @input.to_i
       when (1..50)
         @path = "https://www.bringfido.com/attraction/city/" + @cities[@input.to_i - 1].website
-        puts @path
-        # @path = "https://www.bringfido.com/attraction/city/las_vegas_nv_us/"
       end
   end
 
@@ -54,6 +54,34 @@ class Twyd::CLI
       puts "#{i} #{a.name}"
     end
   end
+
+  def continue
+    puts "--------------------------------"
+    puts "What would you like to do?"
+    puts "1. Learn more about an activity"
+    puts "2. Look up a different city"
+    puts "3. Exit the program"
+    puts "--------------------------------"
+    @input = gets.strip.downcase
+    case @input
+    when "1"
+      puts "Which activity would you like to learn more about?"
+      @input = gets.strip
+      @path = "https://www.bringfido.com" + @activities[@input.to_i - 1].website
+      Twyd::Scraper.describe_activities(@path)
+      puts "#{@activities[@input.to_i - 1].name} is located at #{@activities[@input.to_i - 1].address}."
+      puts "#{@activities[@input.to_i - 1].description}"
+      continue
+    when "2"
+      choose_city
+      make_path
+      list_activities
+      continue
+    when "3"
+      goodbye
+    end
+  end
+
 
   def goodbye
     puts "------------------------------------------"

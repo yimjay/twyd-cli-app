@@ -23,8 +23,14 @@ class Twyd::Scraper
   end
 
   # Scrapes description of specific activity
-  def self.describe_activities
-    puts ""
+  def self.describe_activities(path)
+    html = Nokogiri::HTML(open(path))
+    html.css("div .detail-area p").map do |a|
+      @activity.description = a.text
+    end
+    html.css("div .property-info span").map do |b|
+      @activity.address = b.text
+    end
   end
 
 end
