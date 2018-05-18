@@ -82,7 +82,7 @@ class Twyd::CLI
       puts "Which activity would you like to learn more about?"
       @input = gets.strip
       @path = "https://www.bringfido.com" + @activities[@input.to_i - 1].website
-      Twyd::Scraper.describe_activities(@path)
+      @new = Twyd::Scraper.describe_activities(@path)
       puts "#{@activities[@input.to_i - 1].name} is located at #{@activities[@input.to_i - 1].address}."
       puts "#{@activities[@input.to_i - 1].description}"
       continue
@@ -93,7 +93,7 @@ class Twyd::CLI
       continue
     when "3"
       goodbye
-    when # ERROR OPTION ADD HERE
+    else
       puts "You must choose 1, 2, or 3. Please try again."
       continue
     end

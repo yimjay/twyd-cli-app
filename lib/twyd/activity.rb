@@ -1,5 +1,5 @@
 class Twyd::Activity
-  attr_accessor :name, :type, :rating, :website, :description, :address
+  attr_accessor :name, :type, :rating, :website, :description, :address, :rating
 
   # # Add all instances of Activity
   # @@all = []

@@ -26,12 +26,14 @@ class Twyd::Scraper
   def self.describe_activities(path)
     html = Nokogiri::HTML(open(path))
     html.css("div .detail-area p").map do |a|
-      @activity.description = a.text
+      @activity.description = a[itemprop="description"] #not working
     end
-    html.css("div .property-info span").map do |b|
+    html.css("div .property-info a span").map do |b|
       @activity.address = b.text
     end
-    puts @activity.description
+    html.css("div .reviews-average p").map do |c|
+      @activity.rating = c.text
+    end
     @activity
   end
 
