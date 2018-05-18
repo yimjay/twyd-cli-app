@@ -3,10 +3,8 @@ class Twyd::CLI
   def call
     welcome
     choose_city
-    make_path
     list_activities
     continue
-    goodbye
   end
 
   def welcome
@@ -22,12 +20,13 @@ class Twyd::CLI
   end
 
   def choose_city
-    @cities = Twyd::Scraper.get_cities #array of City object instances
+    @cities = Twyd::Scraper.get_cities # creates an array of City object instances
     @input = nil
     puts "----------------------------------"
     puts "Here's a list of available cities:"
     puts "----------------------------------"
     puts ""
+    # prints a list of cities scraped
     @cities.each.with_index(1) do |city, i|
       puts "#{i}. #{city.name}"
     end
@@ -36,12 +35,24 @@ class Twyd::CLI
     puts "Now, choose a city:"
     puts "-------------------"
     puts ""
+    # number validation for city option
+    number_checker
+  end
+
+  def number_checker
     @input = gets.strip
+    if @input.to_i.between?(1, 50) # include 1 to 50
+      make_path
+    else
+      puts "That is an invalid option. Please choose a different number:"
+      number_checker
+    end
   end
 
   def make_path
     case @input.to_i
       when (1..50)
+        # creates the specific city's link for Scraper.get_activities
         @path = "https://www.bringfido.com/attraction/city/" + @cities[@input.to_i - 1].website
       end
   end
@@ -50,18 +61,21 @@ class Twyd::CLI
     @activities = Twyd::Scraper.get_activities(@path)
     puts ""
     puts "Here is a list of activities popular in #{@cities[@input.to_i - 1].name}"
+    # prints activities available in city chosen by user
     @activities.each.with_index(1) do |a, i|
       puts "#{i} #{a.name}"
     end
   end
 
   def continue
+    puts ""
     puts "--------------------------------"
     puts "What would you like to do?"
     puts "1. Learn more about an activity"
     puts "2. Look up a different city"
     puts "3. Exit the program"
     puts "--------------------------------"
+    puts ""
     @input = gets.strip.downcase
     case @input
     when "1"
@@ -79,6 +93,9 @@ class Twyd::CLI
       continue
     when "3"
       goodbye
+    when # ERROR OPTION ADD HERE
+      puts "You must choose 1, 2, or 3. Please try again."
+      continue
     end
   end
 

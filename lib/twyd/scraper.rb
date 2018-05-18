@@ -31,6 +31,8 @@ class Twyd::Scraper
     html.css("div .property-info span").map do |b|
       @activity.address = b.text
     end
+    puts @activity.description
+    @activity
   end
 
 end
