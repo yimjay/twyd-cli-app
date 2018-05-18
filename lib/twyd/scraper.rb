@@ -6,7 +6,7 @@ class Twyd::Scraper
     html.css("div .info h2 a").map do |cities|
       @city = Twyd::City.new
       @city.name, @city.state = cities.text.split(", ")
-      @city.website = cities.attribute("href").value
+      @city.website = cities.attribute("href").value.gsub("/destination/city/", "")
       @city
     end
   end
