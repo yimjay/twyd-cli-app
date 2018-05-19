@@ -25,14 +25,14 @@ class Twyd::Scraper
   # Scrapes description of specific activity
   def self.describe_activities(path)
     html = Nokogiri::HTML(open(path))
-    html.css("div .detail-area p").map do |a|
-      @activity.description = a[itemprop="description"] #not working
+    html.css("div[itemprop='description'] p").map do |a|
+      puts @activity.description = a.text
     end
     html.css("div .property-info a span").map do |b|
-      @activity.address = b.text
+      puts @activity.address = b.text
     end
     html.css("div .reviews-average p").map do |c|
-      @activity.rating = c.text
+      puts @activity.rating = c.text
     end
     @activity
   end

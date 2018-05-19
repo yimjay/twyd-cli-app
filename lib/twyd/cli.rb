@@ -17,7 +17,7 @@ class Twyd::CLI
     puts ""
     puts "Welcome to TWYD (Travel With Your Dog)! This app was made by someone who loves exploring new cities with her dog, Gretchen, in the hopes that you will keep exploring the world with your dog(s) too.".colorize(:magenta)
     puts ""
-    puts "Just a second while I think..."
+    puts "Just a second while I think...".colorize(:magenta)
     puts ""
   end
 
@@ -64,9 +64,9 @@ class Twyd::CLI
   def list_activities
     @activities = Twyd::Scraper.get_activities(@path)
     puts ""
-    puts "-----------------------------------------------------------"
+    puts "--------------------------------------------------"
     puts "Here is a list of activities popular in #{@cities[@input.to_i - 1].name}:".colorize(:green)
-    puts "-----------------------------------------------------------"
+    puts "--------------------------------------------------"
     puts ""
     # prints activities available in city chosen by user
     @activities.each.with_index(1) do |a, i|
@@ -76,9 +76,9 @@ class Twyd::CLI
 
   def continue
     puts ""
-    puts "--------------------------------"
+    puts "-------------------------------"
     puts "What would you like to do now?".colorize(:green)
-    puts "--------------------------------"
+    puts "-------------------------------"
     puts ""
     puts "1. Learn more about an activity"
     puts "2. Look up a different city"
@@ -87,10 +87,14 @@ class Twyd::CLI
     @input = gets.strip.downcase
     case @input
     when "1"
+      puts ""
+      puts "--------------------------------------------------"
       puts "Which activity would you like to learn more about?".colorize(:green)
+      puts "--------------------------------------------------"
+      puts ""
       @input = gets.strip
       @path = "https://www.bringfido.com" + @activities[@input.to_i - 1].website
-      @new = Twyd::Scraper.describe_activities(@path)
+      @activities = Twyd::Scraper.describe_activities(@path)
       puts "#{@activities[@input.to_i - 1].name} is located at #{@activities[@input.to_i - 1].address}."
       puts "#{@activities[@input.to_i - 1].description}"
       continue
@@ -99,7 +103,7 @@ class Twyd::CLI
       make_path
       list_activities
       continue
-    when "3" || "exit" || "EXIT"
+    when "3" || "exit"
       goodbye
     else
       puts "You must choose 1, 2, or 3. Please try again.".colorize(:red)
