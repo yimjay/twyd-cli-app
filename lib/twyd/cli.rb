@@ -95,7 +95,7 @@ class Twyd::CLI
       @input = gets.strip
       @path = "https://www.bringfido.com" + @activities[@input.to_i - 1].website
       @activities = Twyd::Scraper.describe_activities(@path)
-      puts "#{@activities[@input.to_i - 1].name} is located at #{@activities[@input.to_i - 1].address}."
+      puts "is located at #{@activities[@input.to_i - 1].address}."
       puts "#{@activities[@input.to_i - 1].description}"
       continue
     when "2"

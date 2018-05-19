@@ -32,7 +32,7 @@ class Twyd::Scraper
       puts @activity.address = b.text
     end
     html.css("div .reviews-average p").map do |c|
-      puts @activity.rating = c.text
+      puts @activity.rating = c.text.gsub(/\n+/, " ")
     end
     @activity
   end
