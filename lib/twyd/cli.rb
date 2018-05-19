@@ -8,14 +8,14 @@ class Twyd::CLI
   end
 
   def welcome
-    puts " _________ ____      ____ ____  ____ ______    "
-    puts "|  _   _  |_  _|    |_  _|_  _||_  _|_   _ `.  "
-    puts '|_/ | | \_| \ \  /\  / /   \ \  / /   | | `. \ '
-    puts '    | |      \ \/  \/ /     \ \/ /    | |  | | '
-    puts '   _| |_      \  /\  /      _|  |_   _| |_.'+"' /"
-    puts '  |_____|      \/  \/      |______| |______.'"'"
+    puts " _________ ____      ____ ____  ____ ______    ".colorize(:green)
+    puts "|  _   _  |_  _|    |_  _|_  _||_  _|_   _ `.  ".colorize(:green)
+    puts '|_/ | | \_| \ \  /\  / /   \ \  / /   | | `. \ '.colorize(:green)
+    puts '    | |      \ \/  \/ /     \ \/ /    | |  | | '.colorize(:green)
+    puts '   _| |_      \  /\  /      _|  |_   _| |_.'.colorize(:green)+"' /".colorize(:green)
+    puts '  |_____|      \/  \/      |______| |______.'"'".colorize(:green)
     puts ""
-    puts "Welcome to TWYD (Travel With Your Dog)! This app was made by someone who loves exploring new cities with her dog, Gretchen, in the hopes that you will keep exploring the world with your dog(s) too."
+    puts "Welcome to TWYD (Travel With Your Dog)! This app was made by someone who loves exploring new cities with her dog, Gretchen, in the hopes that you will keep exploring the world with your dog(s) too.".colorize(:magenta)
     puts ""
   end
 
@@ -23,7 +23,7 @@ class Twyd::CLI
     @cities = Twyd::Scraper.get_cities # creates an array of City object instances
     @input = nil
     puts "----------------------------------"
-    puts "Here's a list of available cities:"
+    puts "Here's a list of available cities:".colorize(:green)
     puts "----------------------------------"
     puts ""
     # prints a list of cities scraped
@@ -32,7 +32,7 @@ class Twyd::CLI
     end
     puts ""
     puts "-------------------"
-    puts "Now, choose a city:"
+    puts "Now, choose a city:".colorize(:green)
     puts "-------------------"
     puts ""
     # number validation for city option
@@ -44,7 +44,7 @@ class Twyd::CLI
     if @input.to_i.between?(1, 50) # include 1 to 50
       make_path
     else
-      puts "That is an invalid option. Please choose a different number:"
+      puts "That is an invalid option. Please choose a different number:".colorize(:red)
       number_checker
     end
   end
@@ -60,26 +60,27 @@ class Twyd::CLI
   def list_activities
     @activities = Twyd::Scraper.get_activities(@path)
     puts ""
-    puts "Here is a list of activities popular in #{@cities[@input.to_i - 1].name}"
+    puts "Here is a list of activities popular in #{@cities[@input.to_i - 1].name}:".colorize(:green)
+    puts ""
     # prints activities available in city chosen by user
     @activities.each.with_index(1) do |a, i|
-      puts "#{i} #{a.name}"
+      puts "#{i}. #{a.name}"
     end
   end
 
   def continue
     puts ""
     puts "--------------------------------"
-    puts "What would you like to do?"
-    puts "1. Learn more about an activity"
-    puts "2. Look up a different city"
-    puts "3. Exit the program"
+    puts "What would you like to do?".colorize(:green)
+    puts "1. Learn more about an activity".colorize(:magenta)
+    puts "2. Look up a different city".colorize(:magenta)
+    puts "3. Exit the program".colorize(:magenta)
     puts "--------------------------------"
     puts ""
     @input = gets.strip.downcase
     case @input
     when "1"
-      puts "Which activity would you like to learn more about?"
+      puts "Which activity would you like to learn more about?".colorize(:green)
       @input = gets.strip
       @path = "https://www.bringfido.com" + @activities[@input.to_i - 1].website
       @new = Twyd::Scraper.describe_activities(@path)
@@ -94,7 +95,7 @@ class Twyd::CLI
     when "3"
       goodbye
     else
-      puts "You must choose 1, 2, or 3. Please try again."
+      puts "You must choose 1, 2, or 3. Please try again.".colorize(:red)
       continue
     end
   end
@@ -102,7 +103,7 @@ class Twyd::CLI
 
   def goodbye
     puts "------------------------------------------"
-    puts "Have a fun day with your dog(s). Goodbye!"
+    puts "Have a fun day with your dog(s). Goodbye!".colorize(:green)
     puts "------------------------------------------"
   end
 
