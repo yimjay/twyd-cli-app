@@ -14,7 +14,7 @@ class Twyd::Scraper
   # Scrapes list of activities per city
   def self.get_activities(path)
     html = Nokogiri::HTML(open(path))
-    html.css("div .info h2 a").map do |activities|
+    html.css("div .info h2 a[itemprop='url']").map do |activities|
       @activity = Twyd::Activity.new
       @activity.name = activities.text
       @activity.website = activities.attribute("href").value

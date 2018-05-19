@@ -8,3 +8,4 @@
 
 Bugs
 [X] @activity does not work in CLI but works in Scraper
+[] Only 4 activities listed per city

@@ -15,9 +15,9 @@ class Twyd::CLI
     puts '   _| |_      \  /\  /      _|  |_   _| |_.'.colorize(:green)+"' /".colorize(:green)
     puts '  |_____|      \/  \/      |______| |______.'"'".colorize(:green)
     puts ""
-    puts "Welcome to TWYD (Travel With Your Dog)! This app was made by someone who loves exploring new cities with their dog, Gretchen, in the hopes that you will keep exploring the world with your dog(s) too.".colorize(:magenta)
+    puts "Welcome to TWYD (Travel With Your Dog)! This app was made by someone who loves exploring new cities with their dog, Gretchen, in the hopes that you will be inspired to explore the world with your dog(s) too.".colorize(:magenta)
     puts ""
-    puts "Just a second while get my list back from Gretchen...".colorize(:magenta)
+    puts "Just a second while I play tug-of-war with Gretchen...".colorize(:magenta)
     puts ""
   end
 
@@ -30,12 +30,12 @@ class Twyd::CLI
     puts ""
     # prints a list of cities scraped
     @cities.each.with_index(1) do |city, i|
-      puts "#{i}. #{city.name}"
+      puts "#{i}. #{city.name},#{city.state}"
     end
     puts ""
-    puts "-------------------"
-    puts "Now, choose a city:".colorize(:green)
-    puts "-------------------"
+    puts "-------------------------------------"
+    puts "Which city would you like to look up?".colorize(:green)
+    puts "-------------------------------------"
     puts ""
     # number validation for city option
     number_checker
@@ -43,12 +43,12 @@ class Twyd::CLI
 
   def number_checker
     @input = gets.strip
-    if @input.to_i.between?(1, 50) # include 1 to 50
+    if @input.to_i.between?(1, 50) # 1 to 50 inclusive
       make_path
     elsif @input.downcase == "exit"
       goodbye
     else
-      puts "That is an invalid option. Please choose a different number:".colorize(:red)
+      puts "Sorry! I don't have information about that. Try again.".colorize(:red)
       number_checker
     end
   end
@@ -107,16 +107,16 @@ class Twyd::CLI
     when "exit"
       goodbye
     else
-      puts "You must choose 1, 2, or 3. Please try again.".colorize(:red)
+      puts "1, 2, 3. Easy as A, B, ... Wait. That's not right. Please choose 1, 2, or 3.".colorize(:red)
       continue
     end
   end
 
 
   def goodbye
-    puts "------------------------------------------"
-    puts "Have a fun day with your dog(s). Goodbye!".colorize(:green)
-    puts "------------------------------------------"
+    puts "--------------------------------------------------------"
+    puts "Have a fun day with your dog(s). Adventure is out there!".colorize(:green)
+    puts "--------------------------------------------------------"
   end
 
 end
