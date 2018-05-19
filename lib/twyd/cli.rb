@@ -94,16 +94,17 @@ class Twyd::CLI
       puts ""
       @input = gets.strip
       @path = "https://www.bringfido.com" + @activities[@input.to_i - 1].website
-      @activities = Twyd::Scraper.describe_activities(@path)
-      puts "is located at #{@activities[@input.to_i - 1].address}."
-      puts "#{@activities[@input.to_i - 1].description}"
+      Twyd::Scraper.describe_activities(@path)
+      Twyd::Scraper.print_activities
       continue
     when "2"
       choose_city
       make_path
       list_activities
       continue
-    when "3" || "exit"
+    when "3"
+      goodbye
+    when "exit"
       goodbye
     else
       puts "You must choose 1, 2, or 3. Please try again.".colorize(:red)
