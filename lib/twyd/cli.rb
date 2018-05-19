@@ -15,9 +15,9 @@ class Twyd::CLI
     puts '   _| |_      \  /\  /      _|  |_   _| |_.'.colorize(:green)+"' /".colorize(:green)
     puts '  |_____|      \/  \/      |______| |______.'"'".colorize(:green)
     puts ""
-    puts "Welcome to TWYD (Travel With Your Dog)! This app was made by someone who loves exploring new cities with her dog, Gretchen, in the hopes that you will keep exploring the world with your dog(s) too.".colorize(:magenta)
+    puts "Welcome to TWYD (Travel With Your Dog)! This app was made by someone who loves exploring new cities with their dog, Gretchen, in the hopes that you will keep exploring the world with your dog(s) too.".colorize(:magenta)
     puts ""
-    puts "Just a second while I think...".colorize(:magenta)
+    puts "Just a second while get my list back from Gretchen...".colorize(:magenta)
     puts ""
   end
 
@@ -46,7 +46,7 @@ class Twyd::CLI
     if @input.to_i.between?(1, 50) # include 1 to 50
       make_path
     elsif @input.downcase == "exit"
-      exit
+      goodbye
     else
       puts "That is an invalid option. Please choose a different number:".colorize(:red)
       number_checker

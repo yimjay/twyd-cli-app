@@ -32,13 +32,15 @@ class Twyd::Scraper
       @activity.description = a.text
     end
     html.css("div .reviews-average p").map do |c|
-      @activity.rating = c.text.gsub(/\n+/, " ")
+      @activity.rating = c.text.gsub(/^\s/, "").gsub(/\n+/, " ")
     end
     @activity
   end
 
   def self.print_activities
+    puts ""
     puts "#{@activity.description}"
+    puts ""
     puts "#{@activity.rating}It is located at #{@activity.address}."
   end
 
