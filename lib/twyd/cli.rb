@@ -17,6 +17,8 @@ class Twyd::CLI
     puts ""
     puts "Welcome to TWYD (Travel With Your Dog)! This app was made by someone who loves exploring new cities with her dog, Gretchen, in the hopes that you will keep exploring the world with your dog(s) too.".colorize(:magenta)
     puts ""
+    puts "Just a second while I think..."
+    puts ""
   end
 
   def choose_city
@@ -43,6 +45,8 @@ class Twyd::CLI
     @input = gets.strip
     if @input.to_i.between?(1, 50) # include 1 to 50
       make_path
+    elsif @input.downcase == "exit"
+      exit
     else
       puts "That is an invalid option. Please choose a different number:".colorize(:red)
       number_checker
@@ -60,7 +64,9 @@ class Twyd::CLI
   def list_activities
     @activities = Twyd::Scraper.get_activities(@path)
     puts ""
+    puts "-----------------------------------------------------------"
     puts "Here is a list of activities popular in #{@cities[@input.to_i - 1].name}:".colorize(:green)
+    puts "-----------------------------------------------------------"
     puts ""
     # prints activities available in city chosen by user
     @activities.each.with_index(1) do |a, i|
@@ -71,11 +77,12 @@ class Twyd::CLI
   def continue
     puts ""
     puts "--------------------------------"
-    puts "What would you like to do?".colorize(:green)
-    puts "1. Learn more about an activity".colorize(:magenta)
-    puts "2. Look up a different city".colorize(:magenta)
-    puts "3. Exit the program".colorize(:magenta)
+    puts "What would you like to do now?".colorize(:green)
     puts "--------------------------------"
+    puts ""
+    puts "1. Learn more about an activity"
+    puts "2. Look up a different city"
+    puts "3. Exit the program"
     puts ""
     @input = gets.strip.downcase
     case @input
@@ -92,7 +99,7 @@ class Twyd::CLI
       make_path
       list_activities
       continue
-    when "3"
+    when "3" || "exit" || "EXIT"
       goodbye
     else
       puts "You must choose 1, 2, or 3. Please try again.".colorize(:red)
