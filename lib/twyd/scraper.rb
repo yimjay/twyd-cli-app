@@ -11,6 +11,13 @@ class Twyd::Scraper
     end
   end
 
+  def self.sort_cities
+    @cities = self.get_cities
+    @cities.sort_by! do |city|
+      city.name
+    end
+  end
+
   # Scrapes list of activities per city
   def self.get_activities(path)
     html = Nokogiri::HTML(open(path))
@@ -32,7 +39,7 @@ class Twyd::Scraper
       @activity.description = a.text
     end
     html.css("div .reviews-average p").map do |c|
-      @activity.rating = c.text.gsub(/^\s/, "").gsub(/\n+/, " ")
+      @activity.rating = c.text.strip.gsub(/\n+/, " ")
     end
     @activity
   end
@@ -41,7 +48,7 @@ class Twyd::Scraper
     puts ""
     puts "#{@activity.description}"
     puts ""
-    puts "#{@activity.rating}It is located at #{@activity.address}."
+    puts "#{@activity.rating} It is located at #{@activity.address}."
   end
 
 end

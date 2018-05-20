@@ -22,7 +22,7 @@ class Twyd::CLI
   end
 
   def choose_city
-    @cities = Twyd::Scraper.get_cities # creates an array of City object instances
+    @cities = Twyd::Scraper.sort_cities
     @input = nil
     puts "----------------------------------"
     puts "Here's a list of available cities:".colorize(:green)

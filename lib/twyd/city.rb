@@ -14,8 +14,9 @@ class Twyd::City
     @@all
   end
 
+  # Find city by name
   def self.find_by_name(name)
-    self.all.detect do |n|
+    self.all.find do |n|
       n.name.downcase == name.downcase
     end
   end
