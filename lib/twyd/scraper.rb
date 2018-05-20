@@ -11,6 +11,7 @@ class Twyd::Scraper
     end
   end
 
+  # Returns collection of city instances sorted by name
   def self.sort_cities
     @cities = self.get_cities
     @cities.sort_by! do |city|
@@ -18,7 +19,7 @@ class Twyd::Scraper
     end
   end
 
-  # Scrapes list of activities per city
+  # Scrapes list of activities for given city
   def self.get_activities(path)
     html = Nokogiri::HTML(open(path))
     html.css("div .info h2 a[itemprop='url']").map do |activities|
@@ -29,14 +30,14 @@ class Twyd::Scraper
     end
   end
 
-  # Scrapes description of specific activity
+  # Scrapes description, address, and rating of specific activity for given link
   def self.describe_activities(path)
     html = Nokogiri::HTML(open(path))
-    html.css("div .property-info a span").map do |b|
-      @activity.address = b.text
+    html.css("div .property-info a span").map do |a|
+      @activity.address = a.text
     end
-    html.css("div[itemprop='description'] p").map do |a|
-      @activity.description = a.text
+    html.css("div[itemprop='description'] p").map do |b|
+      @activity.description = b.text
     end
     html.css("div .reviews-average p").map do |c|
       @activity.rating = c.text.strip.gsub(/\n+/, " ")
@@ -44,6 +45,7 @@ class Twyd::Scraper
     @activity
   end
 
+  # Prints activity details
   def self.print_activities
     puts ""
     puts "#{@activity.description}"
