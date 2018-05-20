@@ -107,16 +107,16 @@ class Twyd::CLI
     when "exit"
       goodbye
     else
-      puts "1, 2, 3. Easy as A, B, ... Wait. That's not right. Please choose 1, 2, or 3.".colorize(:red)
+      puts "1, 2, 3. Easy as A, B,... Wait. That's not right. Please choose 1, 2, or 3.".colorize(:red)
       continue
     end
   end
 
 
   def goodbye
-    puts "--------------------------------------------------------"
-    puts "Have a fun day with your dog(s). Adventure is out there!".colorize(:green)
-    puts "--------------------------------------------------------"
+    puts "-----------------------------------------"
+    puts "Have a fun day with your dog(s). Goodbye!".colorize(:green)
+    puts "-----------------------------------------"
   end
 
 end
