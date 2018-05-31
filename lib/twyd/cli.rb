@@ -3,6 +3,7 @@ class Twyd::CLI
   def call
     welcome
     Twyd::Scraper.get_cities
+    Twyd::City.sort_cities
     list_cities
     continue
   end
@@ -22,13 +23,12 @@ class Twyd::CLI
   end
 
   def list_cities
-    cities = Twyd::City.sort_cities
     puts "----------------------------------"
     puts "Here's a list of available cities:".colorize(:green)
     puts "----------------------------------"
     puts ""
     # prints a list of cities scraped
-    cities.each.with_index(1) do |city, i|
+    Twyd::City.all.each.with_index(1) do |city, i|
       puts "#{i}. #{city.name},#{city.state}"
     end
     puts ""
@@ -49,6 +49,7 @@ class Twyd::CLI
     if input.between?(1, 50) # 1 to 50 inclusive
       Twyd::City.assign_num
       Twyd::Scraper.make_path(input)
+      Twyd::Scraper.get_activities
       list_activities(Twyd::City.all[input].name) ## would this work??
     elsif input.downcase == "exit"
       goodbye
@@ -67,14 +68,13 @@ class Twyd::CLI
   # end
 
   def list_activities(name)
-    activities = Twyd::Scraper.get_activities
     puts ""
     puts "--------------------------------------------------"
     puts "Here is a list of activities popular in #{name}:".colorize(:green)
     puts "--------------------------------------------------"
     puts ""
     # prints activities available in city chosen by user
-    activities.each.with_index(1) do |a, i|
+    Twyd::Activity.all.each.with_index(1) do |a, i|
       puts "#{i}. #{a.name}"
     end
   end
@@ -89,23 +89,21 @@ class Twyd::CLI
     puts "2. Look up a different city"
     puts "3. Exit the program"
     puts ""
-    @input = gets.strip.downcase
-    case @input
+    input = gets.strip.downcase
+    case input
     when "1"
       puts ""
       puts "--------------------------------------------------"
       puts "Which activity would you like to learn more about?".colorize(:green)
       puts "--------------------------------------------------"
       puts ""
-      @input = gets.strip
+      input = gets.strip
       @path = "https://www.bringfido.com" + @activities[@input.to_i - 1].website
       Twyd::Scraper.describe_activities(@path)
       Twyd::Scraper.print_activities
       continue
     when "2"
-      choose_city
-      make_path
-      list_activities
+      list_cities
       continue
     when "3"
       goodbye
