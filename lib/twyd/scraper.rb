@@ -3,21 +3,21 @@ class Twyd::Scraper
   # Scrapes the name and individual websites for the most popular cities in BrigFido's website
   def self.get_cities
     html = Nokogiri::HTML(open("https://www.bringfido.com/destination/popular/"))
-    html.css("div .info h2 a").map do |cities|
+    html.css("div .info h2 a").each do |cities|
       @city = Twyd::City.new
       @city.name, @city.state = cities.text.split(", ")
-      @city.website = cities.attribute("href").value.gsub("/destination/city/", "")
+      @city.website = "https://www.bringfido.com/attraction/city/" + cities.attribute("href").value.gsub("/destination/city/", "")
       @city
     end
   end
 
-  # Returns collection of city instances sorted by name
-  def self.sort_cities
-    @cities = self.get_cities
-    @cities.sort_by! do |city|
-      city.name
-    end
-  end
+  # # Returns collection of city instances sorted by name
+  # def self.sort_cities
+  #   # @cities = self.get_cities
+  #   @cities.sort_by! do |city|
+  #     city.name
+  #   end
+  # end
 
   # Scrapes list of activities for given city
   def self.get_activities(path)
@@ -25,7 +25,7 @@ class Twyd::Scraper
     html.css("div .info h2 a[itemprop='url']").map do |activities|
       @activity = Twyd::Activity.new
       @activity.name = activities.text
-      @activity.website = activities.attribute("href").value
+      @activity.website = "https://www.bringfido.com" + activities.attribute("href").value
       @activity
     end
   end
@@ -46,6 +46,7 @@ class Twyd::Scraper
   end
 
   # Prints activity details
+  # move to CLI class, might take an argument that's an activity
   def self.print_activities
     puts ""
     puts "#{@activity.description}"
