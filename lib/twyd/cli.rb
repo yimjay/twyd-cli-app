@@ -4,8 +4,6 @@ class Twyd::CLI
     welcome
     Twyd::Scraper.get_cities
     list_cities
-    choose_city
-    list_activities
     continue
   end
 
@@ -34,6 +32,7 @@ class Twyd::CLI
       puts "#{i}. #{city.name},#{city.state}"
     end
     puts ""
+    choose_city
   end
 
   def choose_city
@@ -46,9 +45,11 @@ class Twyd::CLI
   end
 
   def number_checker
-    input = gets.strip
-    if input.to_i.between?(1, 50) # 1 to 50 inclusive
-      activities = Twyd::Scraper.get_activities(@path)
+    input = gets.strip.to_i
+    if input.between?(1, 50) # 1 to 50 inclusive
+      Twyd::City.assign_num
+      Twyd::Scraper.make_path(input)
+      list_activities(Twyd::City.all[input].name) ## would this work??
     elsif input.downcase == "exit"
       goodbye
     else
@@ -65,15 +66,15 @@ class Twyd::CLI
   #     end
   # end
 
-  def list_activities
-    activities = Twyd::Scraper.get_activities(@path)
+  def list_activities(name)
+    activities = Twyd::Scraper.get_activities
     puts ""
     puts "--------------------------------------------------"
-    puts "Here is a list of activities popular in #{@cities[@input.to_i - 1].name}:".colorize(:green)
+    puts "Here is a list of activities popular in #{name}:".colorize(:green)
     puts "--------------------------------------------------"
     puts ""
     # prints activities available in city chosen by user
-    @activities.each.with_index(1) do |a, i|
+    activities.each.with_index(1) do |a, i|
       puts "#{i}. #{a.name}"
     end
   end

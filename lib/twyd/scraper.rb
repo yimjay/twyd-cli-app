@@ -11,17 +11,13 @@ class Twyd::Scraper
     end
   end
 
-  # # Returns collection of city instances sorted by name
-  # def self.sort_cities
-  #   # @cities = self.get_cities
-  #   @cities.sort_by! do |city|
-  #     city.name
-  #   end
-  # end
+  def self.make_path(input)
+    # when input 1..50 assign path = city.website
+  end
 
   # Scrapes list of activities for given city
-  def self.get_activities(path)
-    html = Nokogiri::HTML(open(path))
+  def self.get_activities
+    html = Nokogiri::HTML(open(@path))
     html.css("div .info h2 a[itemprop='url']").map do |activities|
       @activity = Twyd::Activity.new
       @activity.name = activities.text
